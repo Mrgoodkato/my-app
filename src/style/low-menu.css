@@ -1,0 +1,39 @@
+.low-menu{
+    font-family: monospace;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 50px;
+    gap: 20px;
+    max-height: 140px;
+    overflow: auto;
+    bottom: 0;
+}
+
+.low-menu-text{
+
+    text-align: justify;
+    
+
+}
+.low-menu-text p{
+    background-color: black;
+    padding: 2px 20px;
+    font-size: small;
+    color: rgb(182, 182, 182);
+}
+
+.low-menu-text h1{
+    padding: 2px 20px;
+    background-color: rgb(182, 182, 182);
+    color: black;
+    font-size: medium;
+}
+
+.low-menu-stats{
+    font-size: smaller;
+    color: rgb(182, 182, 182);
+    background-color: rgba(0, 0, 0, 0.363);
+    padding: 20px;
+    border-left: 1px white solid;
+}

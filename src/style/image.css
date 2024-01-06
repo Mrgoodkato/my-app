@@ -1,0 +1,61 @@
+#screenCanvasElement{
+    user-select: none;
+}
+
+.main-container-screen{
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.screen-view{
+    position: relative;
+    width: 800px;
+    height: 500px;
+    overflow: hidden;
+    z-index: 1;
+    border: 1px solid gray;
+}
+
+
+.screen-stats{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.hp-stats{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.stat-card{
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.stat-card h1{
+    padding: 5px 10px;
+    font-size: medium;
+    color: black;
+    background-color: white;
+    animation: stats_title 2s ease-in-out infinite;
+}
+
+.stat-card p{
+    font-size: smaller;
+    font-weight: 300;
+}
+
+.graphic-brain{
+    border-left: 1px solid rgba(255, 255, 255, 0.356);
+}
+

@@ -1,0 +1,35 @@
+Day something of this project, let's call it day 1.
+
+Been working on this for some months now, around 2 months.
+
+Decided to go the Electron route after talking with CHAT GPT. Because for this game, as it is not resource heavy project and doesn't need a complex graphic interface, the best way to go for a JS programmer with no big computer like me, is to go with the easy standalone, browser engine javascript game.
+
+Planning on using gifs to create all the animations of the dreamscape, and buttons using css, js, and P5.
+
+Now to what's been done:
+
+1) Finished a draft of the main UI for the player in HTML, CSS, JS good old structure.
+
+2) Worked my way to integrate a P5 canvas to a html element, bounded that element and used the z-index to render a sample gif from CANVA in the background without overflowing to the front of the UI.
+
+3) Created the controller to scroll through the gif animation, which will give it the control of a species of security camera with panning.
+
+4) ON DEVELOPMENT NOW: Restricting the boundaries of the background gif image so it doesn't scroll indefinetly. 
+    
+    For the x and y axis its easy on one end, just need to make it when x = 0 or y = 0 to stop.
+
+    Been calculating how to stop when the other end of the gif gets out of bounds. Found that the relation between the gif and the dimension of the canvas (and also the HTML element containing the canvas, they are connected after all), is equal to the gif image dimension - the dimension of the canvas.
+
+    Possibly it will go something like:
+    lowerBound x = gif.width - canvas.width
+    lowerBound y = gif.height - canvas.height
+
+Will upload to github. Feeling excited about how its progressing. A LOT OF WORK TO GO STILL.
+
+One day at a time.
+
+PD: Was listening to this banger while working:
+https://www.youtube.com/watch?v=VHpOAy3tLmQ
+
+    You can do it.
+    You will do it.

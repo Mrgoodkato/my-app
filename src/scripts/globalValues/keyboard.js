@@ -1,0 +1,1 @@
+export const movementKeys = [37, 38, 39, 40, 65, 68, 83, 87]

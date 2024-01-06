@@ -1,0 +1,32 @@
+@keyframes button_hover_animation {
+    0%{
+      opacity: 100%;
+    }
+    50%{
+      opacity: 50%;
+    }
+    100%{
+      opacity: 80%;
+    }
+  
+}
+
+@keyframes stats_title {
+  
+  0%{
+    background-color: rgb(171, 241, 142);
+    border: 1px solid rgb(105, 105, 105);
+    border-radius: 5px;
+  }
+  50%{
+    background-color: white;
+    border: 1px solid white;
+  }
+  100%{
+    background-color: rgb(171, 241, 142);
+    border: 1px solid rgb(105, 105, 105);
+    border-radius: 5px;
+  }
+
+}
+
