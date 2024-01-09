@@ -4,12 +4,14 @@ import { movementKeys } from "../globalValues/keyboard.js";
  * Function that defines the values to be returned when pressing keys and returns an object with the respective values
  * Uses a keyList array in order to see what keys are being pressed at the time
  * @param {Array} key 
- * @param {Number} movementConstant 
- * @returns coordinate object with x and y accordingly
+ * @param {Number} movementConstant
+ * @param {Object} limits
+ * @param {Object} currentPos
+ * @returns Vector object with x and y accordingly
  */
-export function MkeysManager(keyList, movementConstant){
+export function MkeysManager(keyList, movementConstant, limits, currentPos){
 
-    const coord = {
+    const vector = {
         x: 0,
         y: 0
     }
@@ -18,12 +20,28 @@ export function MkeysManager(keyList, movementConstant){
         
         const move = singleKeyManager(key);
 
-        if(move.axis == 'x') coord.x = movementConstant * move.value;
-        else if(move.axis == 'y') coord.y = movementConstant * move.value;
+        if(move.axis == 'x' && currentPos.x > 0 && currentPos.x < limits.x) vector.x = movementConstant * move.value;
+        else if(move.axis == 'y' && currentPos.y > 0 && currentPos.y < limits.y) vector.y = movementConstant * move.value;
 
     });
 
-    return coord;
+    return vector;
+
+}
+
+/**
+ * Function used to calculate the limits for the createImage object rendered in the canvas so when it is scrolled it doesn't get out of bounds in the x and y axis
+ * @param {Object} dimensions 
+ * @param {Number} width 
+ * @param {Number} height 
+ * @returns An object with the x and y values for the limits
+ */
+export function calculateLimits(dimensions, width, height){
+
+    return {
+        x: width - dimensions.screenWidth,
+        y: height - dimensions.screenHeight
+    }
 
 }
 

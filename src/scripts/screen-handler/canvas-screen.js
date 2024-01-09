@@ -1,4 +1,4 @@
-import { MkeysManager, createMovementKeyMap } from "../controllers/movement.js";
+import { MkeysManager, createMovementKeyMap, calculateLimits } from "../controllers/movement.js";
 
 export function createScreen(screenElement){
 
@@ -29,6 +29,8 @@ export function createScreen(screenElement){
             gif_createImg.elt.draggable = false;
             gif_createImg.elt.style.userSelect = 'none';
 
+            
+
         }
 
         //Sets up dimensions and scrollValue initial values for the canvas
@@ -45,10 +47,10 @@ export function createScreen(screenElement){
         p.draw = function() {
 
             if(p.keyIsPressed){
-
-                scrollValue.x += MkeysManager(moveKeysList, 5).x;
-                scrollValue.y += MkeysManager(moveKeysList, 5).y;
-                console.log(scrollValue);
+                const limits = calculateLimits(dimensions, gif_createImg.width, gif_createImg.height);
+                const movement = MkeysManager(moveKeysList, 5, limits, scrollValue);
+                scrollValue.x += movement.x;
+                scrollValue.y += movement.y;
             }
 
             

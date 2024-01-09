@@ -1,0 +1,17 @@
+Been a little tired today, I guess it was due to the fact I didn't eat so well today, and the fact that yesterday I had quite a lot of physical activity, wink, wink.
+
+Feeling a little drained but worked on the limits.
+
+The gif is now moving to its boundary and doen't move any further when reaching the desired limit (0 or the gif dimension - screen dimension limit)
+
+The logic inside the MkeysManager() function is working properly on that regard, however, it has the problem that when the gif is moved to any bound, it wont move any further because the condition: scroll.x = 0 or scroll.y = limit is met so, the logic doesn't account for that to reset the values or move it only in another direction.
+
+I can work on fixing this using the following logic:
+
+1) I can make sure that when the gif is on bounds, and the movement is stopped, I calculate the next possible value according to the keys pressed, to see if it will be a value that will break the condition scroll = 0 or scroll = limit.
+
+2) This can be done using a new function to add this logic inside the for.each loop in the MkeysManager().
+
+Let's hope tomorrow I have some more energy, but at least today I managed to work a little, step by step this will be done.
+
+Don't give up !
