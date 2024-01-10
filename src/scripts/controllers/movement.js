@@ -20,8 +20,8 @@ export function MkeysManager(keyList, movementConstant, limits, currentPos){
         
         const move = singleKeyManager(key);
 
-        if(move.axis == 'x' && currentPos.x > 0 && currentPos.x < limits.x) vector.x = movementConstant * move.value;
-        else if(move.axis == 'y' && currentPos.y > 0 && currentPos.y < limits.y) vector.y = movementConstant * move.value;
+        if(move.axis == 'x') vector.x = movementConstant * movementLimiter(currentPos.x, limits.x, move.value);
+        else if(move.axis == 'y') vector.y = movementConstant * movementLimiter(currentPos.y, limits.y, move.value);
 
     });
 
@@ -107,5 +107,21 @@ function singleKeyManager(key){
         default:
             return null;
     }
+
+}
+
+/**
+ * Helper function to limit the move.value final value according to the gif size in the HTML element
+ * @param {Number} currentPos 
+ * @param {Number} limit 
+ * @param {Number} moveDirection 
+ * @returns 0 if the limit is reached according to the direction the movement is going, or the move.value if the limit is not reached
+ */
+function movementLimiter(currentPos, limit, moveDirection){
+
+    if(currentPos < 0 && moveDirection == -1) return 0;
+    if(currentPos > limit && moveDirection == 1) return 0;
+
+    return moveDirection;
 
 }

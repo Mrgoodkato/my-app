@@ -1,0 +1,49 @@
+Today I was pretty sick, but managed to make some work done.
+
+First, I created a function to calculate the limit in the MkeysManager() function, to calculate when the limit (min and max) is reached, as well as taking into account the direction of the movement so when the limit is reached, you can move the gif image to the other direction.
+
+Second, I'm currently working on calculating the correct position in the gif image when I click the mouse inside the viewer. This has been possible so far using the mouse position in the canvas - the scroll value for the given axis.
+
+Currently working as well in generating the functions necessary to navigate to new image sources for the gif animation. So when the user clicks a specific section of the gif animation, it can traverse to another animation, or show details or even trigger events.
+THIS WILL BE SUPER IMPORTANT IN THE GAME. IT WILL POSSIBLY BE THE MAIN MECHANIC, so it needs to be super great and ver detailed.
+
+Also working on how to zoom into the gif image.
+
+IDEAS TO CREATE THIS FRAMEWORK OF CLICK-NAVIGATE-EVENTS:
+
+1) Create a function that takes the mouse position inside the gif image, we can call it navCoordinates and assign it as an object:
+    navCoordinates = {
+        x: {Number},
+        y: {Number}
+    }
+2) Enter this data into a function that will take information on the level and the current gif image shown, where the coordinates clicked will trigger an event if clicked:
+
+    const eventValues = {
+        [Events array for the given animation displayed] -----> HERE WE LOAD THE EVENTS FOR THE GIVEN ANIMATION BEING DISPLAYED
+    }
+
+    function eventTrigger(navCoordinates){
+    
+        eventValues.foreach(event => {
+
+            if(event == navCoordinates){
+                (trigger event) -----> HERE WE DEFINE THE LOGIC OF THE EVENT TO HANDLE EITHER AS A RETURN OR OTHER LOGIC
+            }
+
+        })
+
+    }
+
+SIDE NOTES:
+
+Managed to change the src of the display gif animation using a range of x and y coordinate numbers, xMin, xMax, yMin, yMax and comparing this to the current mouse position when clicking on the gif animation.
+
+It does work. From here we can work on adding further logic to do different types of events in the game according to the position clicked.
+
+Thinking on adding new keyboard shortcuts to move to another location in the map. Instead of clicking in the gif image, or using other mouse events to move front and back, to add more dinamic movement inside the maps.
+
+Also created a new const value in a new script called navigationValues under globalValues folder wher I'm attempting to generate the object for each screen, with all coordinates.
+
+Good work today!
+
+You will do this ! Keep up the spirit brother!

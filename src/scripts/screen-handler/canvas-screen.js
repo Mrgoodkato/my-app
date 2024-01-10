@@ -1,9 +1,13 @@
 import { MkeysManager, createMovementKeyMap, calculateLimits } from "../controllers/movement.js";
+import { initNavigation } from "../globalValues/navigationValues.js";
 
 export function createScreen(screenElement){
 
     //Keys array to track keys being pressed
     let moveKeysList = [];
+
+    //Zoom level variable
+    let zoomLevel = 1;
 
     let gif_createImg;
 
@@ -25,11 +29,9 @@ export function createScreen(screenElement){
         //Preloads the gif image in order to be displayed, undraggable, unselectable
         p.preload = ()=> {
 
-            gif_createImg = p.createImg("img-test/Screen.gif", 'alt');
+            gif_createImg = p.createImg(initNavigation.url, 'alt');
             gif_createImg.elt.draggable = false;
             gif_createImg.elt.style.userSelect = 'none';
-
-            
 
         }
 
@@ -38,8 +40,8 @@ export function createScreen(screenElement){
             const canvas = p.createCanvas(dimensions.screenWidth, dimensions.screenHeight);
             canvas.id('screenCanvasElement');
             canvas.elt.draggable = false;
-            scrollValue.x = dimensions.screenWidth/4;
-            scrollValue.y = dimensions.screenHeight/4;
+            scrollValue.x = dimensions.screenWidth/5;
+            scrollValue.y = dimensions.screenHeight/5;
             console.log(dimensions);
         };
         
@@ -52,11 +54,10 @@ export function createScreen(screenElement){
                 scrollValue.x += movement.x;
                 scrollValue.y += movement.y;
             }
-
             
             gif_createImg.position(-scrollValue.x, -scrollValue.y);
             gif_createImg.style('z-index', '-1');
-
+            
         };
 
         //Checks once any key is pressed in the keyboard
@@ -70,6 +71,32 @@ export function createScreen(screenElement){
         p.keyReleased = function() {
 
             moveKeysList = createMovementKeyMap(moveKeysList, 'released', p.keyCode);
+
+        }
+
+        //Triggered when mouse is clicked
+        p.mouseClicked = function() {
+
+            const pos = {
+                x: p.mouseX + scrollValue.x,
+                y: p.mouseY + scrollValue.y
+            }
+            console.log('Position:', pos.x, pos.y);
+            console.log(initNavigation.triggers[0])
+
+            if(pos.x < initNavigation.triggers[0].xMax && pos.x > initNavigation.triggers[0].xMin) {
+                console.log('trigger')
+                gif_createImg.elt.src = 'img-test/ANIM2.gif';
+            }
+        }
+
+        //Mouse wheel event that triggers when the mouse wheel is used
+        p.mouseWheel = function(e){
+
+            zoomLevel += e.delta / 1000;
+
+            zoomLevel = p.max(zoomLevel, 0.1);
+            zoomLevel = p.min(zoomLevel, 1);
 
         }
 
