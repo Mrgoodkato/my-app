@@ -1,0 +1,24 @@
+Worked on some abstractions in the p5 draw function in order to organize better the code, added a currentNavigation() that works the same as the old code, but performs all actions to generate the movement value in one line (of course using the function logic) and then assign it to scrollValue if a key is pressed.
+
+Also changed the screen image to be static png and added url for front, back, left, right, top, bottom for future navigation of the camera. Will work on that logic later.
+
+Added abstraction also to the mouseClicked() so in just one function, if the left click is pressed, we display the coordinates and trigger a console log if specific coordinates are used.
+
+NEXT WORK TO BE DONE:
+
+1) Finish the logic for change of view horizontally and vertically using the keys:
+
+    The idea is basically to make the camera turn left, right, top, bottom if we surpass the limits. Displaying one of the images for the navigation.
+
+    This can be done making the movementLimiter() in the movement.js file throw more information after it hits a limit.
+
+2) Work on how we will move forward or backwards in the screen.
+
+    A possible solution is to use another key, such as a combination of <<shift w>>, <<shift d>> to go forwards, backwards.
+
+
+3) Work on centering the initial screen image. Took a pic of some drawings on how this could be though of.
+
+Been, not such a great day. I really hope this works out, it will.
+
+Right Zach?

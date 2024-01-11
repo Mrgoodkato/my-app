@@ -1,5 +1,7 @@
-import { MkeysManager, createMovementKeyMap, calculateLimits } from "../controllers/movement.js";
+import {createMovementKeyMap} from "../controllers/movement.js";
+import { currentNavigation } from "../navigation/navigationLogic.js";
 import { initNavigation } from "../globalValues/navigationValues.js";
+import { leftClick } from "../controllers/mouseClick.js";
 
 export function createScreen(screenElement){
 
@@ -9,7 +11,7 @@ export function createScreen(screenElement){
     //Zoom level variable
     let zoomLevel = 1;
 
-    let gif_createImg;
+    let screenImg;
 
     //Constant for dimensions according to the screenElement HTML div where the canvas is situated
     const dimensions = {
@@ -29,9 +31,10 @@ export function createScreen(screenElement){
         //Preloads the gif image in order to be displayed, undraggable, unselectable
         p.preload = ()=> {
 
-            gif_createImg = p.createImg(initNavigation.url, 'alt');
-            gif_createImg.elt.draggable = false;
-            gif_createImg.elt.style.userSelect = 'none';
+            screenImg = p.createImg(initNavigation.urlFront, 'alt');
+            screenImg.elt.draggable = false;
+            screenImg.elt.style.userSelect = 'none';
+            
 
         }
 
@@ -40,23 +43,27 @@ export function createScreen(screenElement){
             const canvas = p.createCanvas(dimensions.screenWidth, dimensions.screenHeight);
             canvas.id('screenCanvasElement');
             canvas.elt.draggable = false;
-            scrollValue.x = dimensions.screenWidth/5;
-            scrollValue.y = dimensions.screenHeight/5;
             console.log(dimensions);
         };
         
         //Draws each frame of the screen
         p.draw = function() {
 
+            if(initNavigation.firstLoad){
+                scrollValue.x = screenImg.width/dimensions.screenWidth;
+                scrollValue.y = screenImg.height/dimensions.screenHeight;
+                console.log(scrollValue)
+                initNavigation.firstLoad = false;
+            }
+
             if(p.keyIsPressed){
-                const limits = calculateLimits(dimensions, gif_createImg.width, gif_createImg.height);
-                const movement = MkeysManager(moveKeysList, 5, limits, scrollValue);
+                const movement = currentNavigation(screenImg, dimensions, moveKeysList, scrollValue);
                 scrollValue.x += movement.x;
                 scrollValue.y += movement.y;
             }
             
-            gif_createImg.position(-scrollValue.x, -scrollValue.y);
-            gif_createImg.style('z-index', '-1');
+            screenImg.position(-scrollValue.x, -scrollValue.y);
+            screenImg.style('z-index', '-1');
             
         };
 
@@ -77,17 +84,8 @@ export function createScreen(screenElement){
         //Triggered when mouse is clicked
         p.mouseClicked = function() {
 
-            const pos = {
-                x: p.mouseX + scrollValue.x,
-                y: p.mouseY + scrollValue.y
-            }
-            console.log('Position:', pos.x, pos.y);
-            console.log(initNavigation.triggers[0])
-
-            if(pos.x < initNavigation.triggers[0].xMax && pos.x > initNavigation.triggers[0].xMin) {
-                console.log('trigger')
-                gif_createImg.elt.src = 'img-test/ANIM2.gif';
-            }
+            if(p.mouseButton == p.LEFT) leftClick(p.mouseX, p.mouseY, scrollValue, initNavigation);
+            
         }
 
         //Mouse wheel event that triggers when the mouse wheel is used
