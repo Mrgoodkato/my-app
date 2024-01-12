@@ -7,22 +7,35 @@ import { movementKeys } from "../globalValues/keyboard.js";
  * @param {Number} movementConstant
  * @param {Object} limits
  * @param {Object} currentPos
- * @returns Vector object with x and y accordingly
+ * @returns Vector object with x and y accordingly and a dir key to define if its reaching a limit direction of plus (right, down), or minus (left, up)
  */
 export function MkeysManager(keyList, movementConstant, limits, currentPos){
 
     const vector = {
         x: 0,
-        y: 0
+        y: 0,
+        dir: '',
+        axis: ''
     }
 
     keyList.forEach(key => {
         
         const move = singleKeyManager(key);
 
-        if(move.axis == 'x') vector.x = movementConstant * movementLimiter(currentPos.x, limits.x, move.value);
-        else if(move.axis == 'y') vector.y = movementConstant * movementLimiter(currentPos.y, limits.y, move.value);
+        if(move.axis == 'x'){
+            const limiterCheck = movementLimiter(currentPos.x, limits.x, move.value);
+            vector.x = movementConstant * limiterCheck.val;
+            vector.dir = limiterCheck.dir;
+            vector.axis = 'x';
 
+        } 
+        else if(move.axis == 'y') {
+            const limiterCheck = movementLimiter(currentPos.y, limits.y, move.value);
+            vector.y = movementConstant * limiterCheck.val;
+            vector.dir = limiterCheck.dir;
+            vector.axis = 'y';
+        }
+        
     });
 
     return vector;
@@ -115,13 +128,13 @@ function singleKeyManager(key){
  * @param {Number} currentPos 
  * @param {Number} limit 
  * @param {Number} moveDirection 
- * @returns 0 if the limit is reached according to the direction the movement is going, or the move.value if the limit is not reached
+ * @returns an object containing the value of the movement or 0 if it reaches a limit, and a dir key defining the axis direction of plus or minus in x or y
  */
 function movementLimiter(currentPos, limit, moveDirection){
 
-    if(currentPos < 0 && moveDirection == -1) return 0;
-    if(currentPos > limit && moveDirection == 1) return 0;
+    if(currentPos < 0 && moveDirection == -1) return {val: 0, dir: 'minus'};
+    if(currentPos > limit && moveDirection == 1) return {val: 0, dir: 'plus'};
 
-    return moveDirection;
+    return {val: moveDirection, dir: 'none'};
 
 }

@@ -1,4 +1,4 @@
-import {createMovementKeyMap} from "../controllers/movement.js";
+import {createMovementKeyMap, calculateLimits} from "../controllers/movement.js";
 import { currentNavigation } from "../navigation/navigationLogic.js";
 import { initNavigation } from "../globalValues/navigationValues.js";
 import { leftClick } from "../controllers/mouseClick.js";
@@ -11,7 +11,11 @@ export function createScreen(screenElement){
     //Zoom level variable
     let zoomLevel = 1;
 
+    //Screen image variable, can change due to src changing due to movement
     let screenImg;
+
+    //Limits variable calculated each time a new screenImg is generated, used to define the limits of the screen for movement and navigation
+    let limits;
 
     //Constant for dimensions according to the screenElement HTML div where the canvas is situated
     const dimensions = {
@@ -34,7 +38,6 @@ export function createScreen(screenElement){
             screenImg = p.createImg(initNavigation.urlFront, 'alt');
             screenImg.elt.draggable = false;
             screenImg.elt.style.userSelect = 'none';
-            
 
         }
 
@@ -49,18 +52,28 @@ export function createScreen(screenElement){
         //Draws each frame of the screen
         p.draw = function() {
 
+            //Called when draw is initialized, only repeated when changing screenImg
+            //WORK ON PROGRESS------------------------------------------------------
             if(initNavigation.firstLoad){
-                scrollValue.x = screenImg.width/dimensions.screenWidth;
-                scrollValue.y = screenImg.height/dimensions.screenHeight;
-                console.log(scrollValue)
+                scrollValue.x = screenImg.width/2;
+                scrollValue.y = screenImg.height/2;
+                console.log(scrollValue);
+                limits = calculateLimits(dimensions, screenImg.width, screenImg.height);
+                console.log(limits);
                 initNavigation.firstLoad = false;
             }
 
+            //logic to move the camera top, down, left, right using keys
             if(p.keyIsPressed){
-                const movement = currentNavigation(screenImg, dimensions, moveKeysList, scrollValue);
+                console.log('is moved')
+                const movement = currentNavigation(limits, moveKeysList, scrollValue);
                 scrollValue.x += movement.x;
                 scrollValue.y += movement.y;
+                console.log(movement);
+
             }
+
+            
             
             screenImg.position(-scrollValue.x, -scrollValue.y);
             screenImg.style('z-index', '-1');

@@ -1,0 +1,73 @@
+TASKS FOR THIS PHASE:
+    
+    1) Finish the logic for change of view horizontally and vertically using the keys:
+
+        The idea is basically to make the camera turn left, right, top, bottom if we surpass the limits. Displaying one of the images for the navigation.
+
+        This can be done making the movementLimiter() in the movement.js file throw more information after it hits a limit.
+
+    2) Work on how we will move forward or backwards in the screen.
+
+        A possible solution is to use another key, such as a combination of <<shift w>>, <<shift d>> to go forwards, backwards.
+
+
+    3) Work on centering the initial screen image. Took a pic of some drawings on how this could be though of.
+
+
+PROGESS:
+
+    1) Completed some more details on the movementLimiter() and MkeysManager() to export more information on the type of movement performed based on the limit information. Now it exports a vector object with:
+        {
+            x: <value of movement in x>,
+            y: <value of movement in y>,
+            dir: <if there is a limit reached, what direction in x or y axis is it moving at, plus or minus>,
+            axis: <the axis the movement is being done> > THIS NEEDS TO BE AN ARRAY, WORK TO BE DONE, AS MANY KEYS CAN BE PRESSED AT THE SAME TIME, SO 2 AXIS CAN BE THIS VALUE
+        }
+    
+    2) <<NOT WORKED ON YET>>
+
+    3) Found an issue when loading screenImg, the <img> element is created asynchronously, so it is not guaranteed that in the first run of the draw() method from P5 we will get the scrollValue initial values to center the image.
+    WORK NEEDS TO BE DONE TO MAKE SURE THE screenImg - p.createImg() finishes loading before running the draw() or before assiging any value to the scrollValue object.
+
+    ChatGPT gave me some advise on this:
+    let img;
+
+        function preload() {
+        // Load the image before the sketch starts
+        img = createImg('path/to/your/image.jpg');
+        img.hide(); // Hide the image initially
+        img.elt.onload = imageLoaded; // Set the onload callback
+        }
+
+        function setup() {
+        createCanvas(400, 400);
+        }
+
+        function draw() {
+        background(220);
+
+        // Check if the image is loaded before displaying it
+        if (img.loaded()) {
+            image(img, 0, 0, width, height);
+        } else {
+            // Display a loading message or handle the case when the image is not loaded yet
+            text("Loading...", 10, 20);
+        }
+
+        // Your drawing code goes here
+        }
+
+        function imageLoaded() {
+        // This function will be called when the image has finished loading
+        img.show(); // Show the image once it's loaded
+        }
+
+Its not a lot of work today but we managed to work a little, which is the important part, on the weekend I'll take more time for this.
+
+Not such a bad day, been having those in rows lately, but I'm feeling less stressed, even though, nothing yet is possitive in my life, specially economically.
+Lot of debts, lot of bills to pay, little money for basic stuff.
+Hope some of my hopes manifest.
+
+Let's have faith on the big guy up there I guess, if he's not a dickhead.
+
+Right Zach?
