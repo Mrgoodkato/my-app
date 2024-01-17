@@ -1,10 +1,6 @@
-import { MkeysManager } from "../controllers/movement.js"
+export function navigator(currentNavigation, movementDir, axis){
 
-export function currentNavigation(limits, moveKeysList, scrollValue){
-
-        const movementVal = MkeysManager(moveKeysList, 5, limits, scrollValue);
-
-        return movementVal;
+        
         
 
 }

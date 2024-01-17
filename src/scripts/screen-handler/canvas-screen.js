@@ -1,5 +1,4 @@
-import {createMovementKeyMap, calculateLimits} from "../controllers/movement.js";
-import { currentNavigation } from "../navigation/navigationLogic.js";
+import {createMovementKeyMap, calculateLimits, MkeysManager } from "../controllers/movement.js";
 import { initNavigation } from "../globalValues/navigationValues.js";
 import { leftClick } from "../controllers/mouseClick.js";
 
@@ -54,27 +53,24 @@ export function createScreen(screenElement){
 
             //Called when draw is initialized, only repeated when changing screenImg
             //WORK ON PROGRESS------------------------------------------------------
-            if(initNavigation.firstLoad){
-                scrollValue.x = screenImg.width/2;
-                scrollValue.y = screenImg.height/2;
+            if(screenImg.width > 0 && initNavigation.firstLoad){
+                scrollValue.x = screenImg.width/2 - dimensions.screenWidth/2;
+                scrollValue.y = screenImg.height/2 - dimensions.screenHeight/2;
                 console.log(scrollValue);
                 limits = calculateLimits(dimensions, screenImg.width, screenImg.height);
-                console.log(limits);
                 initNavigation.firstLoad = false;
             }
 
             //logic to move the camera top, down, left, right using keys
             if(p.keyIsPressed){
                 console.log('is moved')
-                const movement = currentNavigation(limits, moveKeysList, scrollValue);
+                const movement = MkeysManager(moveKeysList, 5, limits, scrollValue);
                 scrollValue.x += movement.x;
                 scrollValue.y += movement.y;
                 console.log(movement);
 
             }
 
-            
-            
             screenImg.position(-scrollValue.x, -scrollValue.y);
             screenImg.style('z-index', '-1');
             
