@@ -1,0 +1,28 @@
+<WORKING ON THIS>
+    1) Finishing the movement logic for pan movement, and tilt movement in the <FRAME>
+        
+            M1) Pan right
+            M2) Pan left
+            M3) Pan up
+            M4) Pan down
+            M5) Tilt right
+            M6) Tilt left
+
+        Let's remember the hierarchy of each of the levels we will create:
+        1) LEVEL = The full map of the level, composed of different <FRAMES>
+        2) FRAME = Each part of the map, that is a 360 degree series of images to pan and tilt to explore, composed by <RENDERS>
+        2) RENDER = Each image in the viewer that the player will interact with and pan, tilt the camera in order to move to another <RENDER>
+
+    Created a new folder with the information of a single frame using google maps 360 photos taken of the tunel de occidente and, using Inkscape, rotating each image to fit a 1080p frame to get all the tilt angles as a single image file named accordingly.
+
+    Replaced the initNavigation object with a function that uses the directory name in order to generate the FRAME.
+
+
+    <NOT WORKED ON THIS YET>
+    2) Work on how we will move forward or backwards in the <FRAME>.
+
+        A possible solution is to use another key, such as a combination of <<shift w>>, <<shift d>> to go forwards, backwards.
+
+Did some advances today, tedious work converting the images.
+
+I know, I know, I could work more today, but I'm pretty tired, want to watch some Fargo before sleep. Tomorrow is a new day!

@@ -1,8 +1,11 @@
 import {createMovementKeyMap, calculateLimits, MkeysManager } from "../controllers/movement.js";
-import { initNavigation } from "../globalValues/navigationValues.js";
+import { FRAMEConstruction } from "../globalValues/navigationValues.js";
 import { leftClick } from "../controllers/mouseClick.js";
 
 export function createScreen(screenElement){
+
+    //Creating the initial FRAME object with the test folder name:
+    const initNavigation = FRAMEConstruction('img-test/test360FRAME/')
 
     //Keys array to track keys being pressed
     let moveKeysList = [];
@@ -33,8 +36,8 @@ export function createScreen(screenElement){
     
         //Preloads the gif image in order to be displayed, undraggable, unselectable
         p.preload = ()=> {
-
-            screenImg = p.createImg(initNavigation.urlFront, 'alt');
+            console.log(initNavigation.urlFront);
+            screenImg = p.createImg(initNavigation.frontRNDR.frontNormal, 'normal');
             screenImg.elt.draggable = false;
             screenImg.elt.style.userSelect = 'none';
 
