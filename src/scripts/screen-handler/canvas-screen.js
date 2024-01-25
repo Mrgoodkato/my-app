@@ -1,11 +1,12 @@
 import {createMovementKeyMap, calculateLimits, MkeysManager } from "../controllers/movement.js";
 import { FRAMEConstruction } from "../globalValues/navigationValues.js";
 import { leftClick } from "../controllers/mouseClick.js";
+import { FRAMEnavigator } from "../navigation/navigationLogic.js";
 
 export function createScreen(screenElement){
 
     //Creating the initial FRAME object with the test folder name:
-    const initNavigation = FRAMEConstruction('img-test/test360FRAME/')
+    const initFRAME = FRAMEConstruction('img-test/test360FRAME/')
 
     //Keys array to track keys being pressed
     let moveKeysList = [];
@@ -14,9 +15,9 @@ export function createScreen(screenElement){
     let zoomLevel = 1;
 
     //Screen image variable, can change due to src changing due to movement
-    let screenImg;
+    let screenRNDR;
 
-    //Limits variable calculated each time a new screenImg is generated, used to define the limits of the screen for movement and navigation
+    //Limits variable calculated each time a new screenRNDR is generated, used to define the limits of the screen for movement and navigation
     let limits;
 
     //Constant for dimensions according to the screenElement HTML div where the canvas is situated
@@ -36,10 +37,12 @@ export function createScreen(screenElement){
     
         //Preloads the gif image in order to be displayed, undraggable, unselectable
         p.preload = ()=> {
-            console.log(initNavigation.urlFront);
-            screenImg = p.createImg(initNavigation.frontRNDR.frontNormal, 'normal');
-            screenImg.elt.draggable = false;
-            screenImg.elt.style.userSelect = 'none';
+            console.log(initFRAME.urlFront);
+            screenRNDR = p.createImg(initFRAME.frontRNDR.normalTLT, 'normal');
+            screenRNDR.elt.draggable = false;
+            screenRNDR.elt.style.userSelect = 'none';
+            initFRAME.currentRNDR = 'frontRNDR';
+            initFRAME.currentTLT = 'normalTLT';
 
         }
 
@@ -54,28 +57,38 @@ export function createScreen(screenElement){
         //Draws each frame of the screen
         p.draw = function() {
 
-            //Called when draw is initialized, only repeated when changing screenImg
-            //WORK ON PROGRESS------------------------------------------------------
-            if(screenImg.width > 0 && initNavigation.firstLoad){
-                scrollValue.x = screenImg.width/2 - dimensions.screenWidth/2;
-                scrollValue.y = screenImg.height/2 - dimensions.screenHeight/2;
+            //lOAD FRAME CONDITIONAL------------------------------------------------
+            //Called when draw is initialized, only repeated when changing screenRNDR
+            if(screenRNDR.width > 0 && initFRAME.firstLoad){
+                scrollValue.x = screenRNDR.width/2 - dimensions.screenWidth/2;
+                scrollValue.y = screenRNDR.height/2 - dimensions.screenHeight/2;
                 console.log(scrollValue);
-                limits = calculateLimits(dimensions, screenImg.width, screenImg.height);
-                initNavigation.firstLoad = false;
+                limits = calculateLimits(dimensions, screenRNDR.width, screenRNDR.height);
+                initFRAME.firstLoad = false;
             }
 
+            //MOVEMENT CONDITIONAL--------------------------------------
             //logic to move the camera top, down, left, right using keys
-            if(p.keyIsPressed){
-                console.log('is moved')
+            if(p.keyIsPressed && !initFRAME.firstLoad){
                 const movement = MkeysManager(moveKeysList, 5, limits, scrollValue);
+
+                //NAVIGATION CONDITIONAL-----------------------------------------------
+                //Triggers when the limit in the RNDR is reached
+                if(movement.dir != 'none' && movement.dir != undefined && movement.dir != null){
+                    const navigation = FRAMEnavigator(movement, initFRAME);
+                    initFRAME.currentRNDR = navigation[0];
+                    initFRAME.currentTLT = navigation[1];
+                    screenRNDR.elt.src = initFRAME[navigation[0]][navigation[1]];
+                    initFRAME.firstLoad = true;
+                }
+
                 scrollValue.x += movement.x;
                 scrollValue.y += movement.y;
-                console.log(movement);
 
             }
 
-            screenImg.position(-scrollValue.x, -scrollValue.y);
-            screenImg.style('z-index', '-1');
+            screenRNDR.position(-scrollValue.x, -scrollValue.y);
+            screenRNDR.style('z-index', '-1');
             
         };
 
@@ -96,10 +109,11 @@ export function createScreen(screenElement){
         //Triggered when mouse is clicked
         p.mouseClicked = function() {
 
-            if(p.mouseButton == p.LEFT) leftClick(p.mouseX, p.mouseY, scrollValue, initNavigation);
+            if(p.mouseButton == p.LEFT) leftClick(p.mouseX, p.mouseY, scrollValue, initFRAME);
             
         }
 
+        //WORK ON PROGRESS--------------------------------------------
         //Mouse wheel event that triggers when the mouse wheel is used
         p.mouseWheel = function(e){
 

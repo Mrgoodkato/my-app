@@ -22,18 +22,18 @@ export function MkeysManager(keyList, movementConstant, limits, currentPos){
         
         const move = singleKeyManager(key);
 
-        if(move.axis == 'x'){
+        if(move.axis == 'X'){
             const limiterCheck = movementLimiter(currentPos.x, limits.x, move.value);
             vector.x = movementConstant * limiterCheck.val;
             vector.dir = limiterCheck.dir;
-            vector.axis = 'x';
+            vector.axis = 'X';
 
         } 
-        else if(move.axis == 'y') {
+        else if(move.axis == 'Y') {
             const limiterCheck = movementLimiter(currentPos.y, limits.y, move.value);
             vector.y = movementConstant * limiterCheck.val;
             vector.dir = limiterCheck.dir;
-            vector.axis = 'y';
+            vector.axis = 'Y';
         }
         
     });
@@ -104,19 +104,19 @@ function singleKeyManager(key){
         //A or left
         case 65:
         case 37:
-            return {axis: 'x', value: -1};
+            return {axis: 'X', value: -1};
         //S or down
         case 83:
         case 40:
-            return {axis: 'y', value: 1};
+            return {axis: 'Y', value: 1};
         //D or right
         case 68:
         case 39:
-            return {axis: 'x', value: 1};
+            return {axis: 'X', value: 1};
         //W or up
         case 87:
         case 38:
-            return {axis: 'y', value: -1};
+            return {axis: 'Y', value: -1};
         default:
             return null;
     }

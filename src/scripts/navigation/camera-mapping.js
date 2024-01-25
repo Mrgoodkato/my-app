@@ -8,7 +8,7 @@
             5) Tilt right
             6) Tilt left
  */
-const FRAME = {
+export const FRAME = {
     
     frontRNDR: {
 
@@ -74,7 +74,7 @@ const FRAME = {
 
     },
 
-    topRNDR: {
+    upRNDR: {
 
         normalTLT: {
             minusX: ['leftRNDR', 'leftTLT'],

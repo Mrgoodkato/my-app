@@ -1,0 +1,80 @@
+wORK ON THE METHOD TO TILT AND TURN IN THE FRAME.
+
+
+1) Using the "navigationValues.js" script we can create the obj that defines the current FRAME:
+
+    <direction> values = [front, back, right, left, up, down]
+
+    FRAME = {
+
+        <direction>RNDR: {
+
+            <direction>Normal: <url>,
+            <direction>RightTLT: <url>,
+            <direction>LeftTLT: <url>,
+            <direction>DownTLT: <url>
+
+        }
+        currentRNDR: <string>,
+        currentTLT: <string>,
+        firstLoad: <boolean>,
+        name: <string>,
+        triggers: [
+            
+            <TO BE WORKED ON>
+    
+        ]
+
+    }
+
+2) In the "canvas-screen.js" script we preload the P5 animation and assign the first "FRAME" value from the initial object creation, using the desired "RNDR" and "TLT".
+
+3) In the "LOAD FRAME CONDITIONAL": The "firstLoad" key is changed to "false" when the dimensions of the img information is loaded (meaning its width or height are higher than 0)
+
+4) The "MOVEMENT CONDITIONAL" defines the functions to be executed when a key is pressed.
+
+    -Using the "movement" object created via the "MkeysManager" function we define the following:
+
+        movement = {
+
+            (These are used to determine the value in x and y numerically to move the FRAME view)
+            x: <number>,
+            y: <number>,
+            
+            (dir defines if "plus", or "minus" or "none" in a one dimensional line, "none" means no limit has been reached)
+            dir: <string>,
+
+            (axis defines the "x" or "y" axis to be used in this one dimensional line)
+            axis: <string>
+        }
+
+<ADDING>
+5) We can check in the "MOVEMENT CONDITIONAL" if the "movement" obj "dir" property is set to something different than "none" and then we can proceed with a function to move the "FRAME" to a new "RNDR" or "TLT".
+
+6) Starting with the "RNDR" movement, we will check for movement to each direction with no tilt. Meaning simple W,A,S,D or arrow keys movement.
+
+7) Creation of a function that based on the "dir" and "axis" of the "FRAME" at the moment a limit is reached, will generate the next direction to move the "FRAME" to.
+<ADDED!>
+
+Notes: Finished the work on the FRAMEnavigator() that defines the next src to be used in the screenRNDR variable that renders the image to the screen based on the above logic.
+
+It was a little mind boggling but I did it, it is a simple, elegant function but it shows some bugs.
+
+<BUGS>:
+The bugs encountered:
+    1) Strange jumps of not valid directions and RNDRS and TLTS when specific directions are pushed.
+    2) Console errors, probably due to the way the image is being rendered, probably will need to add more logic to the <MOVEMENT CONDITIONAL> and the <LOAD FRAME CONDITIONAL>
+    3) Possible issues with the <RNDR> position and dimension when loading the image.
+
+
+Will work on these bugs in the next episode of me vs the code.
+
+<WORK TO BE DONE>
+2) Work on how we will move forward or backwards in the <FRAME>.
+
+        A possible solution is to use another key, such as a combination of <<shift w>>, <<shift d>> to go forwards, backwards.
+
+
+Dear diary. Today had some stomach aches, and some hardship, a lot of work in the day, and feeling a little down due to some personal stuff, couldn't go to the gym due to the pain, and laziness lol. But will go tomorrow. Lets do this, it is always darker before the break of day!
+
+Right Zach?
