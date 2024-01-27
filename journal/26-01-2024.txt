@@ -1,0 +1,71 @@
+FRAMEnavigator() works by selecting the correct URL to display the correct <RNDR> in the <screenRNDR> image.
+
+However, this might be counterproductive. Why not better create all the possible images to be used as <screenRNDR> with all tilts and sides before we can start moving in the <FRAME>?
+
+<BUGS>:
+The bugs encountered:
+    1) Strange jumps of not valid directions and RNDRS and TLTS when specific directions are pushed.
+    2) Console errors, probably due to the way the image is being rendered, probably will need to add more logic to the <MOVEMENT CONDITIONAL> and the <LOAD FRAME CONDITIONAL>
+    3) Possible issues with the <RNDR> position and dimension when loading the image.
+
+These bugs seem to point to a problem loading each url, P5 doesn't seem to work well synchronizing the load of these src images.
+
+Its not possible to have good control over this.
+
+<SOLUTION>
+Use a different approach to load the screenRNDR. Instead of an simple createImage() from P5, why not make it several createImage() object to access each of the.
+
+CRAZY IDEA.
+Use Instead of createImg() the method loadImage() from P5. As per Chat GPT:
+
+    "In P5.js, both createImg() and loadImage() functions are used to load 
+    and display images, but they serve different purposes and have different 
+    behaviors:
+
+    loadImage() Function:
+
+    loadImage() is used to load an image file into memory. 
+    It preloads the image before the sketch starts executing.
+    After loading an image using loadImage(), you can manipulate it using 
+    P5.js image functions such as image(), resize(), filter(), etc.
+    Typically, you use loadImage() when you want to load an image that you 
+    plan to display dynamically within your sketch.
+
+    createImg() Function:
+
+    createImg() is used to dynamically create an HTML <img> element and insert 
+    it into the DOM (Document Object Model).
+    Unlike loadImage(), createImg() doesn't preload the image before the 
+    sketch starts executing. It dynamically loads the image when the createImg() 
+    function is called.
+
+    createImg() is useful when you want to load images from external sources, 
+    such as URLs, and display them dynamically within your sketch.
+    Since createImg() creates an HTML <img> element, you can manipulate its 
+    properties using CSS or JavaScript as well.
+    In summary, loadImage() is used to preload and manipulate images within 
+    the P5.js environment, while createImg() is used to dynamically create and 
+    manipulate HTML <img> elements within your sketch."
+
+<IMPORTANT>
+Modified the navigationValues.js file to export each RNDR as an array, this array will be used by the FRAMERNDR.js script to generate a new set of data and loadImage() in the P5 canvas. So the program will not work until this is done.
+
+Currently testing the FRAMERNDR script using node with node and then the relative path to the script in the terminal.
+
+Finally completed the FRAMERNDR Function, it works very elegantly, goes through the RNDR array in the FRAME obj, and then gets the keys for each RNDR, goes through the keys inside the RNDR itself (normalTLT, leftTLT, rightTLT, downTLT) and can get the string values of each.
+
+Now the only step is to use the loadImage() p5 method in order to generate this object loading each image in the preload function of p5. So all Images will be loaded to be used freely in the draw method.
+
+This can be done to generate the whole level if necessary as the preload() only calls once.
+
+So each FRAME can be loaded dinamically and be in the background.
+
+Checked with ChatGPT and we can use a SQL database to store and then load the images using blob URL objects. I don't think that will use to much memory as they are only image files. Several image files, but static images nevertheless.
+
+Getting ahead of myself, I'm a little excited.
+
+PD: Using ACE COMBAT music for the finishing moments of this session was good.
+https://www.youtube.com/watch?v=OiP_n7dGsB8
+
+We got into this mess, and we'll finish this mess togheter, right Zach?
+(If you don't know about Deadly Premonition, the game, I invite you to investigate Zach, has a special place in my heart)

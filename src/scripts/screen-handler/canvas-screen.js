@@ -70,7 +70,7 @@ export function createScreen(screenElement){
             //MOVEMENT CONDITIONAL--------------------------------------
             //logic to move the camera top, down, left, right using keys
             if(p.keyIsPressed && !initFRAME.firstLoad){
-                const movement = MkeysManager(moveKeysList, 5, limits, scrollValue);
+                const movement = MkeysManager(moveKeysList, 10, limits, scrollValue);
 
                 //NAVIGATION CONDITIONAL-----------------------------------------------
                 //Triggers when the limit in the RNDR is reached
